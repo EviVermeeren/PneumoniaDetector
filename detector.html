@@ -3,16 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://use.typekit.net/bgp4wpv.css" />
     <title>Pneumonia Detector</title>
   </head>
   <body>
     <h1>Pneumonia Detector</h1>
-    <input type="file" id="imageInput" accept="image/*" />
-    <button onclick="detectPneumonia()">Detect Pneumonia</button>
-    <div id="result"></div>
 
-    <div>Teachable Machine Image Model</div>
+    <div class="input__container">
+      <input type="file" id="imageInput" accept="image/*" />
+      <button onclick="detectPneumonia()">Detect Pneumonia</button>
+      <div id="result"></div>
+      <div id="uploadedImageContainer"></div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
     <script type="text/javascript">
@@ -30,6 +34,9 @@
       async function detectPneumonia() {
         const imageInput = document.getElementById("imageInput");
         const resultDiv = document.getElementById("result");
+        const uploadedImageContainer = document.getElementById(
+          "uploadedImageContainer"
+        );
 
         // Load the Teachable Machine model
         const imageModel = await tmImage.load(
@@ -43,7 +50,12 @@
 
         reader.onload = async function (e) {
           img.src = e.target.result;
+          img.style.maxWidth = "100%";
           await img.decode();
+
+          // Display the uploaded image
+          uploadedImageContainer.innerHTML = "";
+          uploadedImageContainer.appendChild(img);
 
           const predictions = await imageModel.predict(img);
 
