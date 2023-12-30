@@ -1,0 +1,74 @@
+h1 {
+  color: #000000;
+  font-size: 40px;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-family: "citizen", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.input__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  gap: 30px;
+  font-family: "citizen", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+p,
+button,
+input,
+div,
+#imageInput {
+  font-family: "citizen", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+#imageInput {
+  opacity: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+.label__file {
+  display: inline-block;
+  background-color: #a04545;
+  color: white;
+  padding: 10px 20px;
+  font-family: "citizen", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  cursor: pointer;
+}
+
+.label__file:hover {
+  background-color: #a04545;
+}
+
+.pseudo__button {
+  background-color: #a04545;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: "citizen", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.pseudo__button:hover {
+  background-color: #a04545;
+}
+
+#imageInputLabel {
+  font-family: "citizen", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
