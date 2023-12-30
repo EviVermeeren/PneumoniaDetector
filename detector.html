@@ -72,23 +72,17 @@
         const imageInput = document.getElementById("imageInput");
         const resultDiv = document.getElementById("result");
 
-        // Check if a file is selected
         if (imageInput.files.length > 0 && img) {
-          // Create a Blob from the data URL
           const blob = await fetch(img.src).then((res) => res.blob());
-
-          // Create an Image element and set its source to the data URL
           const image = new Image();
           image.src = img.src;
-
-          // Wait for the image to load
           await image.decode();
-
-          // Predict using the created Image
           const predictions = await model.predict(image);
 
           resultDiv.innerHTML = `
-      <p>Probability of Pneumonia: ${predictions[1].probability.toFixed(4)}</p>
+      <p>Probability of Pneumonia: ${
+        predictions[1].probability.toFixed(2) * 100
+      }%</p>
       <p>Is Pneumonia: ${predictions[1].probability > 0.5 ? "Yes" : "No"}</p>
     `;
         } else {
@@ -96,7 +90,6 @@
         }
       }
 
-      // Initialize the model when the page loads
       init();
     </script>
   </body>
