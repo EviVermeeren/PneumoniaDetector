@@ -11,8 +11,20 @@
     <h1>Pneumonia Detector</h1>
 
     <div class="input__container">
-      <input type="file" id="imageInput" accept="image/*" />
-      <button onclick="detectPneumonia()">Detect Pneumonia</button>
+      <input
+        type="file"
+        id="imageInput"
+        accept="image/*"
+        onchange="uploadImage()"
+      />
+      <label for="imageInput" class="label__file pseudo__button"
+        >Select an image</label
+      >
+
+      <button class="pseudo__button" onclick="detectPneumonia()">
+        Detect pneumonia
+      </button>
+
       <div id="result"></div>
       <div id="uploadedImageContainer"></div>
     </div>
@@ -22,6 +34,7 @@
     <script type="text/javascript">
       const URL = "./model/";
       let model, maxPredictions;
+      let img;
 
       async function init() {
         const modelURL = URL + "model.json";
@@ -31,47 +44,60 @@
         maxPredictions = model.getTotalClasses();
       }
 
-      async function detectPneumonia() {
+      async function uploadImage() {
         const imageInput = document.getElementById("imageInput");
         const resultDiv = document.getElementById("result");
         const uploadedImageContainer = document.getElementById(
           "uploadedImageContainer"
         );
 
-        // Load the Teachable Machine model
-        const imageModel = await tmImage.load(
-          URL + "model.json",
-          URL + "metadata.json"
-        );
+        if (imageInput.files.length > 0) {
+          img = document.createElement("img");
+          const reader = new FileReader();
 
-        // Load and preprocess the image
-        const img = document.createElement("img");
-        const reader = new FileReader();
+          reader.onload = function (e) {
+            img.src = e.target.result;
+            img.style.maxWidth = "250px";
+            uploadedImageContainer.innerHTML = "";
+            uploadedImageContainer.appendChild(img);
+          };
 
-        reader.onload = async function (e) {
-          img.src = e.target.result;
-          img.style.maxWidth = "100%";
-          await img.decode();
-
-          // Display the uploaded image
-          uploadedImageContainer.innerHTML = "";
-          uploadedImageContainer.appendChild(img);
-
-          const predictions = await imageModel.predict(img);
-
-          // Display the results
-          resultDiv.innerHTML = `
-            <p>Probability of Pneumonia: ${predictions[1].probability.toFixed(
-              4
-            )}</p>
-            <p>Is Pneumonia: ${
-              predictions[1].probability > 0.5 ? "Yes" : "No"
-            }</p>
-          `;
-        };
-
-        reader.readAsDataURL(imageInput.files[0]);
+          reader.readAsDataURL(imageInput.files[0]);
+        } else {
+          alert("Please select an image file.");
+        }
       }
+
+      async function detectPneumonia() {
+        const imageInput = document.getElementById("imageInput");
+        const resultDiv = document.getElementById("result");
+
+        // Check if a file is selected
+        if (imageInput.files.length > 0 && img) {
+          // Create a Blob from the data URL
+          const blob = await fetch(img.src).then((res) => res.blob());
+
+          // Create an Image element and set its source to the data URL
+          const image = new Image();
+          image.src = img.src;
+
+          // Wait for the image to load
+          await image.decode();
+
+          // Predict using the created Image
+          const predictions = await model.predict(image);
+
+          resultDiv.innerHTML = `
+      <p>Probability of Pneumonia: ${predictions[1].probability.toFixed(4)}</p>
+      <p>Is Pneumonia: ${predictions[1].probability > 0.5 ? "Yes" : "No"}</p>
+    `;
+        } else {
+          alert("Please select an image file.");
+        }
+      }
+
+      // Initialize the model when the page loads
+      init();
     </script>
   </body>
 </html>
