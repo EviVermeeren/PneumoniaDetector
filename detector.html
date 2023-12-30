@@ -4,24 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
-    <title>Pneumonia detector</title>
+    <title>Pneumonia Detector</title>
   </head>
   <body>
-    <h1>Pneumonia detector</h1>
+    <h1>Pneumonia Detector</h1>
     <input type="file" id="imageInput" accept="image/*" />
     <button onclick="detectPneumonia()">Detect Pneumonia</button>
     <div id="result"></div>
 
     <div>Teachable Machine Image Model</div>
-    <button type="button" onclick="init()">Start</button>
-    <div id="webcam-container"></div>
-    <div id="label-container"></div>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
     <script type="text/javascript">
       const URL = "./model/";
-
-      let model, webcam, labelContainer, maxPredictions;
+      let model, maxPredictions;
 
       async function init() {
         const modelURL = URL + "model.json";
@@ -29,35 +25,40 @@
 
         model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
-
-        const flip = true;
-        webcam = new tmImage.Webcam(200, 200, flip);
-        await webcam.setup();
-        await webcam.play();
-        window.requestAnimationFrame(loop);
-
-        document.getElementById("webcam-container").appendChild(webcam.canvas);
-        labelContainer = document.getElementById("label-container");
-        for (let i = 0; i < maxPredictions; i++) {
-          labelContainer.appendChild(document.createElement("div"));
-        }
       }
 
-      async function loop() {
-        webcam.update();
-        await predict();
-        window.requestAnimationFrame(loop);
-      }
+      async function detectPneumonia() {
+        const imageInput = document.getElementById("imageInput");
+        const resultDiv = document.getElementById("result");
 
-      async function predict() {
-        const prediction = await model.predict(webcam.canvas);
-        for (let i = 0; i < maxPredictions; i++) {
-          const classPrediction =
-            prediction[i].className +
-            ": " +
-            prediction[i].probability.toFixed(2);
-          labelContainer.childNodes[i].innerHTML = classPrediction;
-        }
+        // Load the Teachable Machine model
+        const imageModel = await tmImage.load(
+          URL + "model.json",
+          URL + "metadata.json"
+        );
+
+        // Load and preprocess the image
+        const img = document.createElement("img");
+        const reader = new FileReader();
+
+        reader.onload = async function (e) {
+          img.src = e.target.result;
+          await img.decode();
+
+          const predictions = await imageModel.predict(img);
+
+          // Display the results
+          resultDiv.innerHTML = `
+            <p>Probability of Pneumonia: ${predictions[1].probability.toFixed(
+              4
+            )}</p>
+            <p>Is Pneumonia: ${
+              predictions[1].probability > 0.5 ? "Yes" : "No"
+            }</p>
+          `;
+        };
+
+        reader.readAsDataURL(imageInput.files[0]);
       }
     </script>
   </body>
