@@ -62,7 +62,7 @@ div,
   text-decoration: none;
   display: block;
   margin: auto;
-  width: 50%;
+  width: 40%;
   background-color: #a04545;
   color: white;
   padding: 10px 20px;
@@ -71,6 +71,11 @@ div,
   font-weight: 300;
   font-style: normal;
   margin-top: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.explanation__button:hover {
+  background-color: #8d2828;
 }
 
 #imageInput {
@@ -91,7 +96,7 @@ div,
 }
 
 .label__file:hover {
-  background-color: #a04545;
+  background-color: #8d2828;
 }
 
 .pseudo__button {
@@ -102,10 +107,11 @@ div,
   font-family: "citizen", sans-serif;
   font-weight: 300;
   font-style: normal;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .pseudo__button:hover {
-  background-color: #a04545;
+  background-color: #8d2828;
 }
 
 #imageInputLabel {
