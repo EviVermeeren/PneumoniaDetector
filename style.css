@@ -32,6 +32,28 @@ div,
   font-style: normal;
 }
 
+.explanation__container {
+  display: block;
+  margin: auto;
+  width: 50%;
+}
+
+.explanation__button {
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  margin: auto;
+  width: 50%;
+  background-color: #a04545;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: "citizen", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  margin-top: 40px;
+}
+
 #imageInput {
   opacity: 0;
   position: absolute;
