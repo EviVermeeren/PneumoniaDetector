@@ -28,7 +28,6 @@
       <div id="result"></div>
       <div id="uploadedImageContainer"></div>
 
-      <!-- "Is this correct?" section initially hidden -->
       <div
         class="feedback__container"
         id="feedbackSection"
@@ -113,9 +112,26 @@
       function submitFeedback() {
         const feedbackOption = document.getElementById("correctOption").value;
         const feedbackSection = document.getElementById("feedbackSection");
+        const imageData = img.src.split(",")[1];
 
-        // Replace the "Is this correct?" section with a new sentence
-        feedbackSection.innerHTML = `<p>Thank you for your feedback.</p>`;
+        fetch("https://pneumoniaapi.onrender.com/api/v1/data/imagedata", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            image: imageData,
+            option: feedbackOption === "yes",
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            feedbackSection.innerHTML = `<p>Thank you for your feedback.</p>`;
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
       }
 
       init();
