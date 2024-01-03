@@ -6,7 +6,7 @@ To test, you can use this picture of someone with pneumonia. It's not from the i
 I uploaded this picture because the pictures of the internet are probably all used in my trained model, which makes it difficult to
 test the accuracy. This x-ray is not used to train my model.
 
-Here is the link to download the picture:
+Here is the link to download the picture: https://raw.githubusercontent.com/EviVermeeren/PneumoniaDetector/main/media/pic.jpg?token=GHSAT0AAAAAACH22GGOGCMGLSM5U3XN6LGIZMVL5WQ
 
 ## Live link
 
