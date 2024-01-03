@@ -27,6 +27,18 @@
 
       <div id="result"></div>
       <div id="uploadedImageContainer"></div>
+
+      <!-- "Is this correct?" section -->
+      <div class="feedback__container">
+        <label for="correctOption">Is this correct?</label>
+        <select id="correctOption">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+        <button class="submit__button" onclick="submitFeedback()">
+          Submit
+        </button>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
@@ -88,6 +100,12 @@
         } else {
           alert("Please select an image file.");
         }
+      }
+
+      function submitFeedback() {
+        const feedbackOption = document.getElementById("correctOption").value;
+        // Add logic to handle the feedback (e.g., update model, store feedback, etc.)
+        alert(`Feedback submitted: ${feedbackOption}`);
       }
 
       init();
