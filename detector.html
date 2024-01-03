@@ -28,8 +28,12 @@
       <div id="result"></div>
       <div id="uploadedImageContainer"></div>
 
-      <!-- "Is this correct?" section -->
-      <div class="feedback__container">
+      <!-- "Is this correct?" section initially hidden -->
+      <div
+        class="feedback__container"
+        id="feedbackSection"
+        style="display: none"
+      >
         <label for="correctOption">Is this correct?</label>
         <select id="correctOption">
           <option value="yes">Yes</option>
@@ -83,6 +87,7 @@
       async function detectPneumonia() {
         const imageInput = document.getElementById("imageInput");
         const resultDiv = document.getElementById("result");
+        const feedbackSection = document.getElementById("feedbackSection");
 
         if (imageInput.files.length > 0 && img) {
           const blob = await fetch(img.src).then((res) => res.blob());
@@ -97,6 +102,9 @@
       }%</p>
       <p>Is Pneumonia: ${predictions[1].probability > 0.5 ? "Yes" : "No"}</p>
     `;
+
+          // Show the "Is this correct?" section
+          feedbackSection.style.display = "block";
         } else {
           alert("Please select an image file.");
         }
