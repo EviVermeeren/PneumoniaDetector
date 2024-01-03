@@ -112,8 +112,10 @@
 
       function submitFeedback() {
         const feedbackOption = document.getElementById("correctOption").value;
-        // Add logic to handle the feedback (e.g., update model, store feedback, etc.)
-        alert(`Feedback submitted: ${feedbackOption}`);
+        const feedbackSection = document.getElementById("feedbackSection");
+
+        // Replace the "Is this correct?" section with a new sentence
+        feedbackSection.innerHTML = `<p>Thank you for your feedback.</p>`;
       }
 
       init();
