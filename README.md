@@ -1,5 +1,13 @@
 # PneumoniaDetector
 
+## You will need a picture of lungs with pneumonia
+
+To test, you can use this picture of someone with pneumonia. It's not from the internet, it's from someone I know that had it.
+I uploaded this picture because the pictures of the internet are probably all used in my trained model, which makes it difficult to
+test the accuracy. This x-ray is not used to train my model.
+
+Here is the link to download the picture:
+
 ## Live link
 
 If you want to check the web application live, go to this link: https://pneumonia-detector-seven.vercel.app/detector.html
