@@ -1,5 +1,7 @@
 # PneumoniaDetector
 
+YouTube video of explanation: https://www.youtube.com/watch?v=TSAQmXqz3t0
+
 ## You will need a picture of lungs with pneumonia
 
 To test, you can use this picture of someone with pneumonia. It's not from the internet, it's from someone I know that had it.
