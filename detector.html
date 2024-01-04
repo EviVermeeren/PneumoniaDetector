@@ -116,6 +116,7 @@
 
         fetch("https://pneumoniaapi.onrender.com/api/v1/data/imagedata", {
           method: "POST",
+          mode: "no-cors", // Set the mode to 'no-cors'
           headers: {
             "Content-Type": "application/json",
           },
@@ -124,10 +125,10 @@
             option: feedbackOption === "yes",
           }),
         })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
+          .then((response) => response) // Note: You can't read the response body with 'no-cors'
+          .then(() => {
             feedbackSection.innerHTML = `<p>Thank you for your feedback.</p>`;
+            console.log("Image and feedback sent successfully.");
           })
           .catch((error) => {
             console.error("Error:", error);
